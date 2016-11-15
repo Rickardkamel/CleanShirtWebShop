@@ -57,6 +57,8 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -95,8 +97,17 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="DataService\DataContext.cs" />
+    <Compile Include="DataService\Migrations\201611151250313_First.cs" />
+    <Compile Include="DataService\Migrations\201611151250313_First.Designer.cs">
+      <DependentUpon>201611151250313_First.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DBModels\OrderLine.cs" />
+    <Compile Include="DataService\Migrations\Configuration.cs" />
     <Compile Include="DataService\Repository\GenericRepository.cs" />
     <Compile Include="DataService\UnitOfWork\UnitOfWork.cs" />
+    <Compile Include="DBModels\Customer.cs" />
+    <Compile Include="DBModels\Order.cs" />
+    <Compile Include="DBModels\Product.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -117,6 +128,14 @@
     <Folder Include="Controllers\" />
     <Folder Include="Handlers\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DataService\Migrations\201611151250313_First.resx">
+      <DependentUpon>201611151250313_First.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
