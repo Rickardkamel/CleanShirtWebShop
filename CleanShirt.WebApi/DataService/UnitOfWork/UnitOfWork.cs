@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using CleanShirt.WebApi.DataService.Repository;
+using CleanShirt.WebApi.DBModels;
 
 namespace CleanShirt.WebApi.DataService.UnitOfWork
 {
@@ -9,13 +11,17 @@ namespace CleanShirt.WebApi.DataService.UnitOfWork
     {
         private readonly object _db;
 
-        //private GenericRepository<ClassName> _classNameRepository;
+        private GenericRepository<Product> _productRepository;
+        private GenericRepository<Customer> _customerRepository;
+        private GenericRepository<Order> _orderRepository;
 
         public UnitOfWork(object db)
         {
             _db = db;
         }
 
-        //public GenericRepository<ClassName> ClassNameRepository => _classNameRepository ?? (_classNameRepository = new GenericRepository<ClassName>(_db));
+        public GenericRepository<Product> ProductRepository => _productRepository ?? (_productRepository = new GenericRepository<Product>(_db));
+        public GenericRepository<Customer> CustomerRepository => _customerRepository ?? (_customerRepository = new GenericRepository<Customer>(_db));
+        public GenericRepository<Order> OrderRepository => _orderRepository ?? (_orderRepository = new GenericRepository<Order>(_db));
     }
 }
