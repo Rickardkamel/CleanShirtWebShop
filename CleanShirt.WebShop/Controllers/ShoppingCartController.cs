@@ -6,8 +6,9 @@ using System.Web.Mvc;
 
 namespace CleanShirt.WebShop.Controllers
 {
-    public class HomeController : Controller
+    public class ShoppingCartController : Controller
     {
+        // GET: ShoppingCart
         public ActionResult Index()
         {
             return View();
