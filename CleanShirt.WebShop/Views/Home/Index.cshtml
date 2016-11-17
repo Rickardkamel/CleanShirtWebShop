@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<CleanShirt.WebShop.ViewModels.ProductViewModel>
+@{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -10,4 +11,21 @@
 
 <div class="row">
     <h1>Products</h1>
+    @foreach (var item in Model)
+    {
+        <p>Product Name</p>
+        @item.Name
+        <br />
+        <p>Product Price</p>
+        @item.Price
+        <br />
+        <p>In Storage: </p>
+        @item.QuantityInStorage
+        <label>pcs</label>
+        <br />
+        <img id="product-img" src="@Url.Content("~/Images/shirts/" + @item.ImageUrl)" />
+
+        <br />
+
+    }
 </div>
