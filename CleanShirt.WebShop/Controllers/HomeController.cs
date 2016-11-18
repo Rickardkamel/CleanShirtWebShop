@@ -4,18 +4,86 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CleanShirt.WebApi.Controllers;
+using CleanShirt.WebShop.ViewModels;
 
 namespace CleanShirt.WebShop.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public readonly ProductController _productController;
+        public HomeController()
         {
-            var x = new ProductController();
+            _productController = new ProductController();
+        }
+        public ActionResult Index(List<ProductViewModel> products)
+        {
 
-            var c = x.Get();
+            var productList = _productController.Get();
+            var productViewModelList = new List<ProductViewModel>();
+            foreach (var item in productList)
+            {
+                var convertedProduct = new ProductViewModel
+                {
+                    Id = item.Id,
+                    ImageUrl = item.ImageUrl,
+                    Name = item.Name,
+                    Price = item.Price,
+                    QuantityInStorage = item.QuantityInStorage
+                };
+                productViewModelList.Add(convertedProduct);
+            }
 
-            return View(c);
+            return View(productViewModelList);
+        }
+
+        public ActionResult AddToCart(ProductViewModel product)
+        {
+            var productFromApi = _productController.Get(product.Id);
+            var convertedProduct = new ShoppingCartItemViewModel
+            {
+                Product = new ProductViewModel
+                {
+                    Id = productFromApi.Id,
+                    ImageUrl = productFromApi.ImageUrl,
+                    Name = productFromApi.Name,
+                    Price = productFromApi.Price,
+                    QuantityInStorage = productFromApi.QuantityInStorage
+                },
+                Quantity = 1
+            };
+
+            if (Session["shoppingCart"] == null)
+            {
+                var newShoppingCart = new ShoppingCartViewModel
+                {
+                    ShoppingCartItem = new List<ShoppingCartItemViewModel>()
+                };
+                newShoppingCart.ShoppingCartItem.Add(convertedProduct);
+
+
+                Session["shoppingCart"] = newShoppingCart;
+            }
+            else
+            {
+                var shoppingList = (ShoppingCartViewModel)Session["shoppingCart"];
+
+                foreach (var item in shoppingList.ShoppingCartItem)
+                {
+                    if (item.Product.Name == convertedProduct.Product.Name)
+                    {
+                        item.Quantity++;
+
+                        Session["shoppingCart"] = shoppingList;
+                        return View("Index");
+                    }
+                }
+
+                shoppingList.ShoppingCartItem.Add(convertedProduct);
+
+                Session["shoppingCart"] = shoppingList;
+            }
+
+            return View("Index");
         }
     }
 }

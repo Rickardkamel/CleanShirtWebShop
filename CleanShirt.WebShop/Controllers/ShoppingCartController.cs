@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CleanShirt.WebShop.ViewModels;
 
 namespace CleanShirt.WebShop.Controllers
 {
@@ -11,7 +12,9 @@ namespace CleanShirt.WebShop.Controllers
         // GET: ShoppingCart
         public ActionResult Index()
         {
-            return View();
+            var shoppingCart = (ShoppingCartViewModel)Session["shoppingCart"];
+
+            return View(shoppingCart);
         }
     }
 }
