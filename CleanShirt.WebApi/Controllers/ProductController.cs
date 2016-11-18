@@ -24,10 +24,10 @@ namespace CleanShirt.WebApi.Controllers
             return _productHandler.Get();
         }
 
-        public IHttpActionResult Get(int id)
+        public ProductContract Get(int id)
         {
             var product = _productHandler.Get(id);
-            return product == null ? (IHttpActionResult)NotFound() : Ok(product);
+            return product;
         }
 
         // NOT BEING USED ATM TODO: CHECK IF WE NEED POST/DELETE
