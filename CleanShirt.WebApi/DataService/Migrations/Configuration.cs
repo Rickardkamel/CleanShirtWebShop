@@ -21,7 +21,6 @@ namespace CleanShirt.WebApi.DataService.Migrations
                 new Product {Id = 2, Name = "Shirt, white", Price = 299, QuantityInStorage = 100, ImageUrl = "2.jpg"},
                 new Product {Id = 3, Name = "Shirt, pink", Price = 299, QuantityInStorage = 100, ImageUrl = "3.jpg"},
                 new Product {Id = 4, Name = "Shirt, gray", Price = 299, QuantityInStorage = 100, ImageUrl = "4.jpg"},
-                new Product {Id = 5, Name = "Shirt, striped", Price = 299, QuantityInStorage = 100, ImageUrl = "5.jpg"},
             };
 
 
