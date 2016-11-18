@@ -1,4 +1,6 @@
-﻿@model List<CleanShirt.WebShop.ViewModels.ProductViewModel>
+﻿<script src="~/Scripts/Product/product.js"></script>
+
+@model List<CleanShirt.WebShop.ViewModels.ProductViewModel>
 @{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,23 +11,44 @@
     <p>Feel free to buy as much as you want!</p>
 </div>
 
+<hr />
 <div class="row">
-    <h1>Products</h1>
-    @foreach (var item in Model)
-    {
-        <p>Product Name</p>
-        @item.Name
-        <br />
-        <p>Product Price</p>
-        @item.Price
-        <br />
-        <p>In Storage: </p>
-        @item.QuantityInStorage
-        <label>pcs</label>
-        <br />
-        <img id="product-img" src="@Url.Content("~/Images/shirts/" + @item.ImageUrl)" />
+    <div class="container" style="margin-top:50px;">
+        <div class="row">
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                                <div class="col-item">
+                                    <div class="post-img-content">
+                                        <img class="img-responsive" src="@Url.Content("~/Images/shirts/" + @item.ImageUrl)" />
+                                    </div>
+                                    <div class="info">
+                                        <div class="row">
+                                            <div class="price col-md-6">
+                                                <h5> @item.Name</h5>
+                                                <h5 class="price-text-color">@item.Price SEK</h5>
+                                            </div>
+                                            <div class="pull right">
+                                                @item.QuantityInStorage in Storage
 
-        <br />
-
-    }
+                                            </div>
+                                        </div>
+                                        <div class="separator clear-left">
+                                            <p class="btn-add">
+                                                <button type="button" onclick="addToCart(@item.Id)" class="btn btn-default btn-sm">
+                                                    <span class="glyphicon glyphicon-shopping-cart"></span> Add to cart
+                                                </button>
+                                            </p>
+                                        </div>
+                                        <div class="clearfix">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+        </div>
+    </div>
 </div>

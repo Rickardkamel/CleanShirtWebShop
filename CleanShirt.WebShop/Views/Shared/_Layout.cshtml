@@ -6,6 +6,8 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -33,7 +35,19 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Shopping Cart", "Index", "ShoppingCart")</li>
+                    <li>
+                        <div style="color: white; margin-right: -200px;">
+                            <label id="item-number">0</label>
+                            <label> Items / </label>
+
+                            <label id="total-price">0</label>
+                            <label> SEK | </label>
+                        </div>
+                    </li>
+                    <li>
+
+                        @Html.ActionLink("Shopping Cart", "Index", "ShoppingCart", null, new {@id = "shopping-cart-link"})
+                    </li>
                 </ul>
             </div>
         </div>
@@ -45,9 +59,10 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/Product/product.js"></script>
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
