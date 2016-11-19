@@ -16,5 +16,35 @@ namespace CleanShirt.WebShop.Controllers
 
             return View(shoppingCart);
         }
+
+        public JsonResult UpdateItemInCart(ShoppingCartItemViewModel shoppingCartItem)
+        {
+            var shoppingList = (ShoppingCartViewModel)Session["shoppingCart"];
+
+            foreach (var item in shoppingList.ShoppingCartItems)
+            {
+                if (item.Product.Id == shoppingCartItem.Product.Id)
+                {
+                    item.Quantity = shoppingCartItem.Quantity;
+                }
+            }
+
+            Session["shoppingCart"] = shoppingList;
+
+            return Json(shoppingList);
+        }
+
+        public JsonResult RemoveFromCart(int id)
+        {
+            var shoppingList = (ShoppingCartViewModel)Session["shoppingCart"];
+
+            shoppingList.ShoppingCartItems.Remove(shoppingList.ShoppingCartItems.FirstOrDefault(x => x.Product.Id == id));
+
+            Session["shoppingCart"] = shoppingList;
+
+            return Json(shoppingList);
+        }
+
+        // TODO: CHECKOUT
     }
 }
