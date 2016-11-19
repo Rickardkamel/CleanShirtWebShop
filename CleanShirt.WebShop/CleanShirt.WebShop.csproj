@@ -129,6 +129,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\ShoppingCartItemViewModel.cs" />
     <Compile Include="ViewModels\ShoppingCartViewModel.cs" />
@@ -191,6 +192,10 @@
     <ProjectReference Include="..\CleanShirt.WebApi\CleanShirt.WebApi.csproj">
       <Project>{6e997dd5-1b51-4a85-add4-0f6ba9ef620e}</Project>
       <Name>CleanShirt.WebApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Contracts\Contracts.csproj">
+      <Project>{87D4EBAC-492E-425D-B20B-6258E7743D45}</Project>
+      <Name>Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
