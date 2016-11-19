@@ -38,17 +38,10 @@ namespace CleanShirt.WebShop.Controllers
 
         public ActionResult AddToCart(ProductViewModel product)
         {
-            var productFromApi = _productController.Get(product.Id);
+            //var productFromApi = _productController.Get(product.Id);
             var convertedProduct = new ShoppingCartItemViewModel
             {
-                Product = new ProductViewModel
-                {
-                    Id = productFromApi.Id,
-                    ImageUrl = productFromApi.ImageUrl,
-                    Name = productFromApi.Name,
-                    Price = productFromApi.Price,
-                    QuantityInStorage = productFromApi.QuantityInStorage
-                },
+                Product = product,
                 Quantity = 1
             };
 
@@ -56,9 +49,9 @@ namespace CleanShirt.WebShop.Controllers
             {
                 var newShoppingCart = new ShoppingCartViewModel
                 {
-                    ShoppingCartItem = new List<ShoppingCartItemViewModel>()
+                    ShoppingCartItems = new List<ShoppingCartItemViewModel>()
                 };
-                newShoppingCart.ShoppingCartItem.Add(convertedProduct);
+                newShoppingCart.ShoppingCartItems.Add(convertedProduct);
 
 
                 Session["shoppingCart"] = newShoppingCart;
@@ -67,7 +60,7 @@ namespace CleanShirt.WebShop.Controllers
             {
                 var shoppingList = (ShoppingCartViewModel)Session["shoppingCart"];
 
-                foreach (var item in shoppingList.ShoppingCartItem)
+                foreach (var item in shoppingList.ShoppingCartItems)
                 {
                     if (item.Product.Name == convertedProduct.Product.Name)
                     {
@@ -78,12 +71,14 @@ namespace CleanShirt.WebShop.Controllers
                     }
                 }
 
-                shoppingList.ShoppingCartItem.Add(convertedProduct);
+                shoppingList.ShoppingCartItems.Add(convertedProduct);
 
                 Session["shoppingCart"] = shoppingList;
             }
 
             return View("Index");
         }
+
+        
     }
 }
