@@ -122,6 +122,7 @@ namespace CleanShirt.WebApi.Mappers
         #endregion
 
         #endregion
+
         #region Entity
 
         #region Object
