@@ -1,12 +1,36 @@
 ﻿$(document).ready(function () {
     $("form").submit(function (data) {
-        console.log(data);
-        getFormObj("contact-form");
+        registerCart();
         return false;
     });
 
-    // TODO: SEND TO CHECKOUT
 });
+
+function registerCart() {
+    var customerData = getFormObj("contact-form");
+
+    $.post("ShoppingCart/RegisterCart", customerData, function (response) {
+        response.BilledDate = parseDate(response.BilledDate);
+        response.SentDate = parseDate(response.SentDate);
+        response.OrderedDate = parseDate(response.OrderedDate);
+        
+        // TODO: SEND TO CHECKOUT
+
+        console.log(response);
+    });
+}
+
+function parseDate(date) {
+    var dateInString = '{ "billedDate": ' + '"' + date + '"' + '}';
+    var parsed = JSON.parse(dateInString, function (key, value) {
+        if (typeof value === 'string') {
+            var d = /\/Date\((\d*)\)\//.exec(value);
+            return (d) ? new Date(+d[1]) : value;
+        }
+        return value;
+    });
+    return parsed;
+}
 
 function getFormObj(formId) {
     var formObj = {};
@@ -14,13 +38,12 @@ function getFormObj(formId) {
     $.each(inputs, function (i, input) {
         formObj[input.name] = input.value;
     });
-    return formObj;    
+    return formObj;
 
 }
 
 function updateItemQuantity(itemId) {
     var quantityToUpdate = $("#quantity" + itemId).val();
-    var totalPrice = 0;
     if (quantityToUpdate <= 0) {
         removeItem(itemId);
         return;
