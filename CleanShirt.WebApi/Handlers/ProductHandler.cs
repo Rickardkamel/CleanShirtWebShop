@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using CleanShirt.WebApi.Contracts;
 using CleanShirt.WebApi.DataService;
 using CleanShirt.WebApi.DataService.UnitOfWork;
 using CleanShirt.WebApi.Mappers;
+using Contracts;
 
 namespace CleanShirt.WebApi.Handlers
 {

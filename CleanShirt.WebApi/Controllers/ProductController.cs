@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
-using CleanShirt.WebApi.Contracts;
 using CleanShirt.WebApi.DataService;
 using CleanShirt.WebApi.Handlers;
+using Contracts;
 
 namespace CleanShirt.WebApi.Controllers
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CleanShirt.WebApi.Contracts;
 using CleanShirt.WebApi.DBModels;
+using Contracts;
 
 namespace CleanShirt.WebApi.Mappers
 {

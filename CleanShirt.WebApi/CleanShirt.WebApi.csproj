@@ -104,10 +104,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Contracts\CustomerContract.cs" />
-    <Compile Include="Contracts\OrderContract.cs" />
-    <Compile Include="Contracts\OrderLineContract.cs" />
-    <Compile Include="Contracts\ProductContract.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="DataService\DataContext.cs" />
     <Compile Include="DataService\Migrations\201611151250313_First.cs" />
@@ -139,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Contracts\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +145,12 @@
     <EmbeddedResource Include="DataService\Migrations\201611151250313_First.resx">
       <DependentUpon>201611151250313_First.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Contracts\Contracts.csproj">
+      <Project>{87d4ebac-492e-425d-b20b-6258e7743d45}</Project>
+      <Name>Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
