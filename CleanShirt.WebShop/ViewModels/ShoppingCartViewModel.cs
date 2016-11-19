@@ -4,6 +4,6 @@ namespace CleanShirt.WebShop.ViewModels
 {
     public class ShoppingCartViewModel
     {
-        public List<ShoppingCartItemViewModel> ShoppingCartItem { get; set; }
+        public List<ShoppingCartItemViewModel> ShoppingCartItems { get; set; }
     }
 }
