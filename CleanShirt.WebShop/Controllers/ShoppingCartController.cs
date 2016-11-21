@@ -54,9 +54,10 @@ namespace CleanShirt.WebShop.Controllers
 
             var orderLines = shoppingList.ShoppingCartItems.Select(item => new OrderLineContract
             {
-                PricePerProduct = item.Product.Price,
+                Quantity = item.Quantity,
+                ProductId = item.Product.Id,
                 ProductName = item.Product.Name,
-                Quantity = item.Quantity
+                PricePerProduct = item.Product.Price,
             }).ToList();
 
             var totalPrice = orderLines.Sum(item => (item.PricePerProduct*item.Quantity));
@@ -66,12 +67,14 @@ namespace CleanShirt.WebShop.Controllers
                 Customer = cust,
                 Billed = false,
                 Sent = false,
-                BilledDate = DateTime.Now.Date,
-                SentDate = DateTime.Now.Date,
-                OrderedDate = DateTime.Now.Date,
+                //BilledDate = DateTime.Now,
+                //SentDate = DateTime.Now,
+                //OrderedDate = DateTime.Now,
                 OrderLines = orderLines,
                 TotalPrice = totalPrice,
             };
+
+            Session["shoppingCart"] = null;
 
             return Json(order);
         }

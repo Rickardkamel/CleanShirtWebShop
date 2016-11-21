@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using CleanShirt.WebApi.Controllers;
 using CleanShirt.WebShop.ViewModels;
+using Contracts;
+using Newtonsoft.Json.Linq;
 
 namespace CleanShirt.WebShop.Controllers
 {
@@ -15,25 +17,36 @@ namespace CleanShirt.WebShop.Controllers
         {
             _productController = new ProductController();
         }
-        public ActionResult Index(List<ProductViewModel> products)
+        public ActionResult Index()
         {
+            //var productList = _productController.Get();
 
-            var productList = _productController.Get();
-            var productViewModelList = new List<ProductViewModel>();
-            foreach (var item in productList)
+            //var productViewModelList = productList.Select(item => new ProductViewModel
+            //{
+            //    Id = item.Id,
+            //    ImageUrl = item.ImageUrl,
+            //    Name = item.Name,
+            //    Price = item.Price,
+            //    QuantityInStorage = item.QuantityInStorage
+            //}).ToList();
+
+            //return View(productViewModelList);
+            return View();
+        }
+
+        public ActionResult Products(List<ProductViewModel> products)
+        {
+            if (Request.IsAjaxRequest())
             {
-                var convertedProduct = new ProductViewModel
-                {
-                    Id = item.Id,
-                    ImageUrl = item.ImageUrl,
-                    Name = item.Name,
-                    Price = item.Price,
-                    QuantityInStorage = item.QuantityInStorage
-                };
-                productViewModelList.Add(convertedProduct);
+                return View("Index", products);
             }
+            else
+            {
+                return View("Index");
+            }
+            var p = products;
 
-            return View(productViewModelList);
+            return View(products);
         }
 
         public ActionResult AddToCart(ProductViewModel product)
