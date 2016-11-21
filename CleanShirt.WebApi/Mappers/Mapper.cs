@@ -58,6 +58,7 @@ namespace CleanShirt.WebApi.Mappers
             {
                 Id = orderLine.Id,
                 Quantity = orderLine.Quantity,
+                ProductId = orderLine.ProductId,
                 ProductName = orderLine.ProductName,
                 PricePerProduct = orderLine.PricePerProduct,
             };
@@ -114,6 +115,7 @@ namespace CleanShirt.WebApi.Mappers
             {
                 Id = x.Id,
                 Quantity = x.Quantity,
+                ProductId = x.ProductId,
                 ProductName = x.ProductName,
                 PricePerProduct = x.PricePerProduct,
             });
@@ -174,6 +176,7 @@ namespace CleanShirt.WebApi.Mappers
             {
                 Id = orderLineContract.Id,
                 Quantity = orderLineContract.Quantity,
+                ProductId = orderLineContract.ProductId,
                 ProductName = orderLineContract.ProductName,
                 PricePerProduct = orderLineContract.PricePerProduct,
             };
@@ -230,6 +233,7 @@ namespace CleanShirt.WebApi.Mappers
             {
                 Id = x.Id,
                 Quantity = x.Quantity,
+                ProductId = x.ProductId,
                 ProductName = x.ProductName,
                 PricePerProduct = x.PricePerProduct,
             });
