@@ -30,11 +30,11 @@ namespace CleanShirt.WebApi.DataService.Migrations
                         OrderedDate = c.DateTime(nullable: false),
                         Billed = c.Boolean(nullable: false),
                         Sent = c.Boolean(nullable: false),
-                        BilledDate = c.DateTime(nullable: false),
-                        SentDate = c.DateTime(nullable: false),
+                        BilledDate = c.DateTime(nullable: true),
+                        SentDate = c.DateTime(nullable: true),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Customers", t => t.CustomerId, cascadeDelete: true)
+                .ForeignKey("dbo.Customers", t => t.CustomerId, cascadeDelete: false)
                 .Index(t => t.CustomerId);
             
             CreateTable(
@@ -42,6 +42,7 @@ namespace CleanShirt.WebApi.DataService.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        ProductId = c.Int(nullable: false),
                         ProductName = c.String(),
                         Quantity = c.Int(nullable: false),
                         PricePerProduct = c.Int(nullable: false),

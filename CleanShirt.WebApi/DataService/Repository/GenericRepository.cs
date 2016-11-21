@@ -55,10 +55,11 @@ namespace CleanShirt.WebApi.DataService.Repository
             SaveChanges();
         }
 
-        public void CreateOrUpdate(TEntity entity)
+        public TEntity CreateOrUpdate(TEntity entity)
         {
             _dbSet.AddOrUpdate(entity);
             SaveChanges();
+            return entity;
         }
 
         public void SaveChanges()
