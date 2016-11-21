@@ -1,15 +1,14 @@
 ﻿$(document).ready(function () {
     $.get("http://localhost:53365/api/product/",
         function (data, status) {
-
-            console.log(data);
             $.ajax({
-                type: "POST",
-                url: 'Home/Products', // don't hardcode your url's!
+                url: 'Home/Products',
                 traditional: true,
-                contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(data),
-                success: function (msg) {
+                contentType: "application/json; charset=utf-8",
+                type: 'POST',
+                success: function (data) {
+                    $("#partialView").html(data);
                 }
             });
         });

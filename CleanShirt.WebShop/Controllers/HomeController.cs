@@ -12,46 +12,23 @@ namespace CleanShirt.WebShop.Controllers
 {
     public class HomeController : Controller
     {
-        public readonly ProductController _productController;
-        public HomeController()
-        {
-            _productController = new ProductController();
-        }
+        //public readonly ProductController _productController;
+        //public HomeController()
+        //{
+        //    _productController = new ProductController();
+        //}
         public ActionResult Index()
         {
-            //var productList = _productController.Get();
-
-            //var productViewModelList = productList.Select(item => new ProductViewModel
-            //{
-            //    Id = item.Id,
-            //    ImageUrl = item.ImageUrl,
-            //    Name = item.Name,
-            //    Price = item.Price,
-            //    QuantityInStorage = item.QuantityInStorage
-            //}).ToList();
-
-            //return View(productViewModelList);
             return View();
         }
 
         public ActionResult Products(List<ProductViewModel> products)
         {
-            if (Request.IsAjaxRequest())
-            {
-                return View("Index", products);
-            }
-            else
-            {
-                return View("Index");
-            }
-            var p = products;
-
-            return View(products);
+            return PartialView(products);
         }
 
         public ActionResult AddToCart(ProductViewModel product)
         {
-            //var productFromApi = _productController.Get(product.Id);
             var convertedProduct = new ShoppingCartItemViewModel
             {
                 Product = product,
