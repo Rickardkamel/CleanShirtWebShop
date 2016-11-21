@@ -1,6 +1,4 @@
-﻿<script src="~/Scripts/Product/product.js"></script>
-
-@model List<CleanShirt.WebShop.ViewModels.ProductViewModel>
+﻿@model List<CleanShirt.WebShop.ViewModels.ProductViewModel>
 @{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,7 +10,13 @@
 </div>
 
 <hr />
-<div class="row">
+<div id="partialView">
+    @*@{
+        if(Model !?)
+        Html.RenderPartial("Products");
+    }*@
+</div>  
+@*<div class="row">
     <div class="container" style="margin-top:50px;">
         <div class="row">
                     @if (Model != null)
@@ -51,4 +55,4 @@
                     }
         </div>
     </div>
-</div>
+</div>*@

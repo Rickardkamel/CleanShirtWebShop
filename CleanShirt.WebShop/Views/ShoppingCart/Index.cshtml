@@ -38,7 +38,7 @@
                                             <h6><strong>@item.Product.Price <span class="text-muted"> SEK x</span></strong></h6>
                                         </div>
                                         <div class="col-xs-4">
-                                            @Html.TextBoxFor(m => item.Quantity, new { id = "quantity" + @item.Product.Id, @class = "form-control input-sm", @value = @item.Quantity })
+                                            @Html.TextBoxFor(m => item.Quantity, new { id = "quantity" + @item.Product.Id, @class = "form-control input-sm", @value = @item.Quantity, @onchange = "updateItemQuantity("+ @item.Product.Id +");" })
                                             @*<input id="item-quantity + @item.Product.Id" type="text" class="form-control input-sm" value="@item.Quantity">*@
                                         </div>
                                         <div class="col-xs-1">
