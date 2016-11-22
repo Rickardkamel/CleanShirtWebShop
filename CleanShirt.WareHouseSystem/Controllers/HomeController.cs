@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using CleanShirt.WareHouseSystem.ViewModels;
 
 namespace CleanShirt.WareHouseSystem.Controllers
 {
@@ -13,18 +11,9 @@ namespace CleanShirt.WareHouseSystem.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult WarehouseList(List<OrderViewModel> orders)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return PartialView(orders);
         }
     }
 }
