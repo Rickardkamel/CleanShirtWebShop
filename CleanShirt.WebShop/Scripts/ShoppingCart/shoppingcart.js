@@ -10,20 +10,13 @@ function registerCart() {
     var customerData = getFormObj("contact-form");
 
     $.post("ShoppingCart/RegisterCart", customerData, function (response) {
-        //response.BilledDate = parseDate(response.BilledDate);
-        //response.SentDate = parseDate(response.SentDate);
-        //response.OrderedDate = parseDate(response.OrderedDate);
-
         // TODO: SEND TO CHECKOUT
-
         $.post("http://localhost:53365/api/order/", response).done(function (data) {
             //window.location.href = '/Home/Index/';
             swal({
                 title: "Purchase complete!",
                 text: "Thank you for your purchase!",
                 type: "success",
-                //showCancelButton: true,
-                //confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Back to home",
                 closeOnConfirm: false,
                 allowEscapeKey: false
@@ -58,25 +51,12 @@ function getFormObj(formId) {
 
 }
 
-function updateItemQuantity(itemId) {
-
-    var previous;
-    var $el = $("#quantity" + itemId);
-    $el.data('oldVal', $el.val());
-
-
-    $el.change(function () {
-        //store new value
-        var $this = $(this);
-        var newValue = $this.data('newVal', $this.val());
-            console.log("new value:" + newValue);
-        })
-    .focus(function () {
-        // Get the value when input gains focus
-        var previous = $(this).data('oldVal');
-        console.log("old value:" + previous);
-    });
-
+function updateItemQuantity(itemId, optionalValue) {
+    
+   
+    if (optionalValue > 0) {
+        $("#quantity" + itemId).val(optionalValue);
+    }
 
     var quantityToUpdate = $("#quantity" + itemId).val();
     if (quantityToUpdate <= 0) {
@@ -93,7 +73,8 @@ function updateItemQuantity(itemId) {
                timer: 2000,
                showConfirmButton: false
            });
-           $("#quantity" + itemId).val(previous);
+           //$("#quantity" + itemId).val(previous);
+           updateItemQuantity(itemId, 1);
            return;
        }
        var dataToSend = {

@@ -1,12 +1,8 @@
-﻿namespace CleanShirt.WebShop.ViewModels
+﻿using Contracts;
+
+namespace CleanShirt.WebShop.ViewModels
 {
-    public class CustomerViewModel
+    public class CustomerViewModel : CustomerContract
     {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Adress { get; set; }
-        public string ZipCode { get; set; }
-        public string City { get; set; }
     }
 }
