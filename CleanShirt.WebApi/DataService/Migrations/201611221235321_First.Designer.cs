@@ -13,7 +13,7 @@ namespace CleanShirt.WebApi.DataService.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201611211200149_First"; }
+            get { return "201611221235321_First"; }
         }
         
         string IMigrationMetadata.Source

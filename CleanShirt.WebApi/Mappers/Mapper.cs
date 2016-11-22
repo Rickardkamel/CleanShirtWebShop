@@ -48,6 +48,7 @@ namespace CleanShirt.WebApi.Mappers
                 BilledDate = order.BilledDate,
                 TotalPrice = order.TotalPrice,
                 OrderedDate = order.OrderedDate,
+                Customer = order.Customer.ToContract(),
                 OrderLines = order.OrderLines.ToList().ToContracts(),
             };
         }
@@ -105,6 +106,7 @@ namespace CleanShirt.WebApi.Mappers
                 BilledDate = x.BilledDate,
                 TotalPrice = x.TotalPrice,
                 OrderedDate = x.OrderedDate,
+                Customer = x.Customer.ToContract(),
                 OrderLines = x.OrderLines.ToList().ToContracts(),
             });
         }
@@ -166,6 +168,7 @@ namespace CleanShirt.WebApi.Mappers
                 BilledDate = orderContract.BilledDate,
                 TotalPrice = orderContract.TotalPrice,
                 OrderedDate = orderContract.OrderedDate,
+                Customer = orderContract.Customer.ToEntity(),
                 OrderLines = orderContract.OrderLines.ToList().ToEntities(),
             };
         }
@@ -223,6 +226,7 @@ namespace CleanShirt.WebApi.Mappers
                 BilledDate = x.BilledDate,
                 TotalPrice = x.TotalPrice,
                 OrderedDate = x.OrderedDate,
+                Customer = x.Customer.ToEntity(),
                 OrderLines = x.OrderLines.ToList().ToEntities(),
             });
         }

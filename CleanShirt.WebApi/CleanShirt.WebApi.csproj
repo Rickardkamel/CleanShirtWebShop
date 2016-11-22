@@ -163,9 +163,9 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="DataService\DataContext.cs" />
-    <Compile Include="DataService\Migrations\201611211200149_First.cs" />
-    <Compile Include="DataService\Migrations\201611211200149_First.Designer.cs">
-      <DependentUpon>201611211200149_First.cs</DependentUpon>
+    <Compile Include="DataService\Migrations\201611221235321_First.cs" />
+    <Compile Include="DataService\Migrations\201611221235321_First.Designer.cs">
+      <DependentUpon>201611221235321_First.cs</DependentUpon>
     </Compile>
     <Compile Include="DBModels\OrderLine.cs" />
     <Compile Include="DataService\Migrations\Configuration.cs" />
@@ -217,8 +217,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DataService\Migrations\201611211200149_First.resx">
-      <DependentUpon>201611211200149_First.cs</DependentUpon>
+    <EmbeddedResource Include="DataService\Migrations\201611221235321_First.resx">
+      <DependentUpon>201611221235321_First.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

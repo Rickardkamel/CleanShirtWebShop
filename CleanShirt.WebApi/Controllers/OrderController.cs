@@ -28,8 +28,8 @@ namespace CleanShirt.WebApi.Controllers
 
         public IHttpActionResult Post(OrderContract orderContract)
         {
-            _orderHandler.Post(orderContract);
-            return Ok();
+            var x = _orderHandler.Post(orderContract);
+            return x != null ? (IHttpActionResult) Ok() : BadRequest();
         }
 
         // TODO: CHECK IF WE NEED DELETE

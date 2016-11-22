@@ -27,19 +27,22 @@ namespace CleanShirt.WebApi.Handlers
             return _uow.OrderRepository.Get(id).ToContract();
         }
 
-        public void Post(OrderContract orderContract)
+        public OrderContract Post(OrderContract orderContract)
         {
+            if (orderContract.Id != 0)
+                return _uow.OrderRepository.CreateOrUpdate(orderContract.ToEntity()).ToContract();
+
+
             // set date to today, TODO: set null on billeddate & sentdate
             orderContract.OrderedDate = DateTime.Now;
-            orderContract.BilledDate = DateTime.Now;
-            orderContract.SentDate = DateTime.Now;
+            orderContract.BilledDate = null;
+            orderContract.SentDate = null;
 
             // Create the costumer
             var customer = _uow.CustomerRepository.CreateOrUpdate(orderContract.Customer.ToEntity());
             orderContract.CustomerId = customer.Id;
 
             // remove quantity from product
-
             foreach (var item in orderContract.OrderLines)
             {
                 var productFromDb = _uow.ProductRepository.Get(item.ProductId);
@@ -48,7 +51,7 @@ namespace CleanShirt.WebApi.Handlers
                 _uow.ProductRepository.CreateOrUpdate(productFromDb);
             }
 
-            _uow.OrderRepository.CreateOrUpdate(orderContract.ToEntity());
+            return _uow.OrderRepository.CreateOrUpdate(orderContract.ToEntity()).ToContract();
         }
 
         public void Delete(int id)

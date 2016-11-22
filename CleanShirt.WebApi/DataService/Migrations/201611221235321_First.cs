@@ -30,8 +30,8 @@ namespace CleanShirt.WebApi.DataService.Migrations
                         OrderedDate = c.DateTime(nullable: false),
                         Billed = c.Boolean(nullable: false),
                         Sent = c.Boolean(nullable: false),
-                        BilledDate = c.DateTime(nullable: true),
-                        SentDate = c.DateTime(nullable: true),
+                        BilledDate = c.DateTime(),
+                        SentDate = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Customers", t => t.CustomerId, cascadeDelete: false)
