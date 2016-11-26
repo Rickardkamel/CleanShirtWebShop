@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $.get("http://localhost:53365/api/order/",
+    $.get("http://localhost:53365/api/order/warehouseorders",
         function (data, status) {
             $.ajax({
                 url: 'Home/WarehouseList',

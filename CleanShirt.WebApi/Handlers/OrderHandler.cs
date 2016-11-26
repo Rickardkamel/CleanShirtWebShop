@@ -22,6 +22,11 @@ namespace CleanShirt.WebApi.Handlers
             return _uow.OrderRepository.GetAll().ToContracts();
         }
 
+        public List<OrderContract> GetWareHouseOrders()
+        {
+            return _uow.OrderRepository.GetAll().Where(x => x.Billed).ToList().ToContracts();
+        }
+
         public OrderContract Get(int id)
         {
             return _uow.OrderRepository.Get(id).ToContract();
@@ -58,5 +63,7 @@ namespace CleanShirt.WebApi.Handlers
         {
             _uow.OrderRepository.Delete(id);
         }
+
+        
     }
 }
