@@ -3,14 +3,18 @@
         registerCart();
         return false;
     });
-
+    
+    $("#cart")
+        .on("focus", ".quantity",
+            function () {
+                prev = parseInt($(this).val());
+            });
 });
 
 function registerCart() {
     var customerData = getFormObj("contact-form");
 
     $.post("ShoppingCart/RegisterCart", customerData, function (response) {
-        // TODO: SEND TO CHECKOUT
         $.post("http://localhost:53365/api/order/", response).done(function (data) {
             //window.location.href = '/Home/Index/';
             swal({
@@ -25,7 +29,6 @@ function registerCart() {
                 window.location.href = "/";
             });
         });
-        console.log(response);
     });
 }
 
@@ -48,11 +51,9 @@ function getFormObj(formId) {
         formObj[input.name] = input.value;
     });
     return formObj;
-
 }
 
 function updateItemQuantity(itemId, optionalValue) {
-    
    
     if (optionalValue > 0) {
         $("#quantity" + itemId).val(optionalValue);
@@ -68,13 +69,12 @@ function updateItemQuantity(itemId, optionalValue) {
        if (quantityToUpdate > data.QuantityInStorage) {
            swal({
                title: "QuantityError",
-               text: "We don't have that quantity of this item!",
+               text: "We don't have that quantity of this item! \n We only have " + data.QuantityInStorage + " in storage.",
                type: "error",
                timer: 2000,
                showConfirmButton: false
            });
-           //$("#quantity" + itemId).val(previous);
-           updateItemQuantity(itemId, 1);
+           $("#quantity" + itemId).val(prev);
            return;
        }
        var dataToSend = {
