@@ -19,11 +19,11 @@
                 </div>
                 @if (Model != null)
                 {
-                    <div class="panel-body">
+                    <div id="cart" class="panel-body">
                         @foreach (var item in Model.ShoppingCartItems)
                         {
                             <div id="item-@item.Product.Id">
-                                <div class="row">
+                                <div  class="row">
                                     <div class="col-xs-2">
                                         <img class="img-responsive" style="width: 100px; height: 70px" src="@Url.Content("~/Images/shirts/" + @item.Product.ImageUrl)" />
                                     </div>
@@ -38,7 +38,7 @@
                                             <h6><strong>@item.Product.Price <span class="text-muted"> SEK x</span></strong></h6>
                                         </div>
                                         <div class="col-xs-4">
-                                            @Html.TextBoxFor(m => item.Quantity, new { id = "quantity" + @item.Product.Id, @class = "form-control input-sm", @value = @item.Quantity, @onchange = "updateItemQuantity("+ @item.Product.Id +");" })
+                                            @Html.TextBoxFor(m => item.Quantity, new { id = "quantity" + @item.Product.Id, data_id=@item.Product.Id, type="number",  @class = "form-control quantity input-sm", @value = @item.Quantity, @onchange = "updateItemQuantity("+ @item.Product.Id +");" })
                                             @*<input id="item-quantity + @item.Product.Id" type="text" class="form-control input-sm" value="@item.Quantity">*@
                                         </div>
                                         <div class="col-xs-1">
@@ -71,8 +71,6 @@
                                 </h4>
                             </div>
                             <form class="form-horizontal" id="contact-form">
-
-
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="appendedtext"></label>
                                     <div class="col-md-4">
