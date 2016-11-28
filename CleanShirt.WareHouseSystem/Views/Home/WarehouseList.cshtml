@@ -6,17 +6,16 @@
         <div class="row col-md-10 col-md-offset-1 custyle">
             <table class="table table-striped custab">
                 <thead>
-                    @*<a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a>*@
-                    <tr>
-                        <th>ID</th>
-                        <th>Customer Name</th>
-                        <th>Total Price</th>
-                        <th>Ordered Date</th>
-                        <th class="text-center">Delivered</th>
-                        <th class="text-center">Billed</th>
-                        <th>Action</th>
-                        @* class="text-center" *@
-                    </tr>
+                @*<a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a>*@
+                <tr>
+                    <th>ID</th>
+                    <th>Customer Name</th>
+                    <th>Total Price</th>
+                    <th>Ordered Date</th>
+                    <th class="text-center">Delivered</th>
+                    <th>Action</th>
+                    @* class="text-center" *@
+                </tr>
                 </thead>
                 @if (Model != null)
                 {
@@ -32,20 +31,25 @@
                                 {
                                     <span style="color: green" class="glyphicon glyphicon-ok"></span>
                                 }
-                            </td>
-                            <td class="text-center">
-                                @if (item.Billed == true)
-                                {
-                                    <span style="color: green" class="glyphicon glyphicon-ok"></span>
-                                }
                                 else
                                 {
                                     <span style="color: red" class="glyphicon glyphicon-remove"></span>
                                 }
                             </td>
+                           
                             <td>
-                                <button class="btn btn-success btn-xs" onclick="invoiceOrder(@Json.Encode(item))"><span class="glyphicon glyphicon-ok"></span></button>
-                                <button class="btn btn-danger btn-xs" onclick="unInvoiceOrder(@Json.Encode(item))"><span class="glyphicon glyphicon-remove"></span></button>
+                                @if (item.Sent == false)
+                                {
+                                    <button class="btn btn-info btn-sm" onclick="openCheckList(@Json.Encode(item))">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-danger btn-sm" onclick="undoSent(@Json.Encode(item))">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                }
                             </td>
                         </tr>
                     }
