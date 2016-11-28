@@ -67,9 +67,6 @@ namespace CleanShirt.WebShop.Controllers
                 Customer = cust,
                 Billed = false,
                 Sent = false,
-                //BilledDate = DateTime.Now,
-                //SentDate = DateTime.Now,
-                //OrderedDate = DateTime.Now,
                 OrderLines = orderLines,
                 TotalPrice = totalPrice,
             };
