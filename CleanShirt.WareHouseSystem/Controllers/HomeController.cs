@@ -15,5 +15,9 @@ namespace CleanShirt.WareHouseSystem.Controllers
         {
             return PartialView(orders);
         }
+        public ActionResult CheckList(OrderViewModel order)
+        {
+            return PartialView(order);
+        }
     }
 }
