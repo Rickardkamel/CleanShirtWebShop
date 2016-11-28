@@ -16,8 +16,7 @@
 
 function invoiceOrder(order) {
     order.BilledDate = new Date().toUTCString();
-    //order.SentDate = testParse(order.SentDate);
-    order.OrderedDate = testParse(order.OrderedDate);
+    order.OrderedDate = parseDate(order.OrderedDate);
     order.Billed = true;
     $.post("http://localhost:53365/api/order", order)
     .done(function (response) {
@@ -26,9 +25,18 @@ function invoiceOrder(order) {
 };
 
 function unInvoiceOrder(order) {
+    if (order.Sent === true) {
+        swal({
+            title: "BillingError",
+            text: "The order has already been marked as SENT!",
+            type: "error",
+            timer: 3000,
+            showConfirmButton: false
+        });
+        return;
+    }
     order.BilledDate = new Date().toUTCString();
-    //order.SentDate = testParse(order.SentDate);
-    order.OrderedDate = testParse(order.OrderedDate);
+    order.OrderedDate = parseDate(order.OrderedDate);
     order.Billed = false;
     $.post("http://localhost:53365/api/order", order)
     .done(function (response) {
@@ -36,7 +44,7 @@ function unInvoiceOrder(order) {
     });
 };
 
-function testParse(date) {
+function parseDate(date) {
     var parsed = new Date(date.match(/\d+/)[0] * 1).toUTCString();
     return parsed;
 };
