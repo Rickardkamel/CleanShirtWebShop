@@ -15,7 +15,7 @@ function registerCart() {
     var customerData = getFormObj("contact-form");
 
     $.post("ShoppingCart/RegisterCart", customerData, function (response) {
-        $.post("http://localhost:53365/api/order/", response).done(function (data) {
+        $.post("http://localhost:53365/api/order/" + "NewOrder", response).done(function (data) {
             //window.location.href = '/Home/Index/';
             swal({
                 title: "Purchase complete!",
