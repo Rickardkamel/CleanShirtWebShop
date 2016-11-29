@@ -1,18 +1,49 @@
 ﻿$(document).ready(function () {
-    $.get("http://localhost:53365/api/order/warehouseorders",
-        function (data, status) {
-            $.ajax({
-                url: 'Home/WarehouseList',
-                traditional: true,
-                data: JSON.stringify(data),
-                contentType: "application/json; charset=utf-8",
-                type: 'POST',
-                success: function (data) {
-                    $("#partialView").html(data);
-                }
-            });
-        });
 });
+
+
+getAllOrders();
+getNewOrder();
+
+function getAllOrders() {
+    $.get("http://localhost:53365/api/order/warehouseorders",
+       function (data, status) {
+           $.ajax({
+               url: 'Home/WarehouseList',
+               traditional: true,
+               data: JSON.stringify(data),
+               contentType: "application/json; charset=utf-8",
+               type: 'POST',
+               success: function (data) {
+                   $("#partialView").html(data);
+               }
+           });
+       });
+}
+
+function getNewOrder() {
+    $.get("http://localhost:53365/api/order/GetNewOrders/" + "InvoiceOrder",
+        function (messageResponse) {
+            if (messageResponse === "") {
+                getNewOrder();
+            } else {
+                $.get("http://localhost:53365/api/order/" + messageResponse,
+                function (order) {
+                    $.ajax({
+                        url: 'Home/WarehouseList',
+                        traditional: true,
+                        data: JSON.stringify([order]),
+                        contentType: "application/json; charset=utf-8",
+                        type: 'POST',
+                        success: function (orderToAppend) {
+                            $("#partialView").append(orderToAppend);
+                            getNewOrder();
+                        }
+                    });
+                });
+            }
+        });
+}
 
 
 
