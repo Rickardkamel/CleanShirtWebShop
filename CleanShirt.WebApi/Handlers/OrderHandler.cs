@@ -6,6 +6,8 @@ using CleanShirt.WebApi.DataService;
 using CleanShirt.WebApi.DataService.UnitOfWork;
 using CleanShirt.WebApi.Mappers;
 using Contracts;
+using Microsoft.ServiceBus.Messaging;
+using Newtonsoft.Json;
 
 namespace CleanShirt.WebApi.Handlers
 {
@@ -32,10 +34,15 @@ namespace CleanShirt.WebApi.Handlers
             return _uow.OrderRepository.Get(id).ToContract();
         }
 
-        public OrderContract Post(OrderContract orderContract)
+        public OrderContract Post(OrderContract orderContract, string queueType)
         {
+            OrderContract order;
             if (orderContract.Id != 0)
-                return _uow.OrderRepository.CreateOrUpdate(orderContract.ToEntity()).ToContract();
+            {
+                order = _uow.OrderRepository.CreateOrUpdate(orderContract.ToEntity()).ToContract();
+                SendInput(order.Id.ToString(), queueType);
+                return order;
+            }
 
 
             // set date to today, TODO: set null on billeddate & sentdate
@@ -56,7 +63,32 @@ namespace CleanShirt.WebApi.Handlers
                 _uow.ProductRepository.CreateOrUpdate(productFromDb);
             }
 
-            return _uow.OrderRepository.CreateOrUpdate(orderContract.ToEntity()).ToContract();
+            order = _uow.OrderRepository.CreateOrUpdate(orderContract.ToEntity()).ToContract();
+            SendInput(order.Id.ToString(), queueType);
+            return order;
+        }
+
+        
+
+        public bool SendInput(string message, string queueType)
+        {
+            var connectionString = "Endpoint=sb://cleanshirtws.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=t205ZpBJEI6Z09afJgxm10Ed5qFbGA2QC6tDq65iLP0=";
+            var queueName = queueType;
+
+            try
+            {
+                var client = QueueClient.CreateFromConnectionString(connectionString, queueName);
+
+                var messageToSend = new BrokeredMessage(message) { ContentType = "text/plain" };
+
+                client.Send(messageToSend);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public void Delete(int id)
@@ -64,6 +96,6 @@ namespace CleanShirt.WebApi.Handlers
             _uow.OrderRepository.Delete(id);
         }
 
-        
+
     }
 }
