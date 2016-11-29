@@ -4,5 +4,26 @@
     <h1 style="font-family: 'Josefin Sans', sans-serif;" class="text-center">Billing system</h1>
 </div>
 <hr />
-
-<div id="partialView"></div>
+<div class="row">
+    <div class="container">
+        <div class="row col-md-10 col-md-offset-1 custyle">
+            <table id="billing-table" class="table table-striped custab">
+                <thead>
+                @*<a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a>*@
+                <tr>
+                    <th>ID</th>
+                    <th>Customer Name</th>
+                    <th>Total Price</th>
+                    <th>Ordered Date</th>
+                    <th>Products</th>
+                    <th class="text-center">Delivered</th>
+                    <th class="text-center">Billed</th>
+                    <th>Action</th>
+                    @* class="text-center" *@
+                </tr>
+                </thead>
+                <tbody id="partialView"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
