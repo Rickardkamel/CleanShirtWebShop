@@ -19,10 +19,13 @@
                                         <h5 class="price-text-color">@item.Price SEK</h5>
                                     </div>
                                     <div class="pull right">
-                                        @item.QuantityInStorage in Storage
+                                        
 
                                     </div>
                                 </div>
+                               
+                               @if (item.QuantityInStorage > 0)
+                               {
                                 <div class="separator clear-left">
                                     <p class="btn-add">
                                         <button type="button" onclick="addToCart(@item.Id)" class="btn btn-default btn-sm">
@@ -30,8 +33,25 @@
                                         </button>
                                     </p>
                                 </div>
+                               }
+                               
+                                
                                 <div class="clearfix">
+                                    <div style="margin-top: 8px;" class=" clear-right">
+                                        @if (item.QuantityInStorage > 0)
+                                        {
+                                            @item.QuantityInStorage
+                                            <span> in Storage</span>
+
+                                        }
+                                        else
+                                        {
+                                            <span>None in storage</span>
+                                        }
+                                    </div>
                                 </div>
+                                
+
                             </div>
                         </div>
                     </div>
