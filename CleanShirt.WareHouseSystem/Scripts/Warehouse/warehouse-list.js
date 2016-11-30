@@ -36,8 +36,71 @@ function getNewOrder() {
                         contentType: "application/json; charset=utf-8",
                         type: 'POST',
                         success: function (orderToAppend) {
-                            $("#partialView").append(orderToAppend);
-                            getNewOrder();
+                            //var rows = $("table").find("> tbody > tr");
+
+                            var flag = 0;
+                            var spot = 0;
+                            if ($('td:first-child').length > 0) {
+                                $('td:first-child')
+                                    .each(function (e) {
+                                        if ($(this).text() == messageResponse) {
+                                            flag = 1;
+                                            spot = e;
+                                        }
+                                    });
+                            }
+
+                            if (flag == 1) {
+                                //$(this).parent().remove();
+                                //$('table>tbody > tr > td').slice(spot, spot).parent().remove();
+                                $('td:first-child')
+                                    .each(function(e) {
+                                        if (e === spot) {
+                                            $(this).parent().remove();
+                                            getNewOrder();
+                                        }
+                                    });
+
+                            } else {
+                                $("#partialView").append(orderToAppend);
+                                getNewOrder();
+                            }
+
+                            //var flag = 0;
+                            //$("table").find("tr").each(function () {
+                            //    var td1 = $(this).find("td:first-child").text();
+                            //    if (messageResponse == td1) {
+                            //        flag = 1;
+                            //    }
+                            //});
+                            //if (flag == 1) {
+                                
+                            //} else {
+                            //    $('#test').append('<tr><td>' + test + '</td><td>' + sample + '</td></tr>');
+                            //}
+                            //$("#add").val("");
+                            //$("#add2").val("");
+
+                            //var xc = $('td:first-child').length;
+                            //if ($('td:first-child').length > 0) {
+                            //    $('td:first-child')
+                            //        .each(function(e) {
+                            //            if ($(this).text() === messageResponse) {
+                            //                console.log("duplicate");
+                            //                $(this).parent().remove();
+                            //                return false;
+                            //            } else if (xc === e) {
+                            //                $("#partialView").append(orderToAppend);
+                            //                return false;
+                            //            }
+                            //        });
+                            //} else {
+                            //    $("#partialView").append(orderToAppend);
+                            //    getNewOrder();
+                            //}
+                            ////
+                            //getNewOrder();
+
                         }
                     });
                 });
@@ -77,7 +140,7 @@ function deliverOrder(order) {
         //TODO: DELIVER ORDER
         console.log("Checked");
         $.ajax({
-            url: "http://localhost:53365/api/order/",
+            url: "http://localhost:53365/api/order/" + "NewOrder",
             traditional: true,
             data: JSON.stringify(order),
             contentType: "application/json; charset=utf-8",
@@ -115,7 +178,7 @@ function undoSent(order) {
 
     //TODO: DELIVER ORDER
     $.ajax({
-        url: "http://localhost:53365/api/order/",
+        url: "http://localhost:53365/api/order/" + "NewOrder",
         traditional: true,
         data: JSON.stringify(order),
         contentType: "application/json; charset=utf-8",

@@ -36,8 +36,36 @@ function getNewOrder() {
                         contentType: "application/json; charset=utf-8",
                         type: 'POST',
                         success: function (orderToAppend) {
-                            $("#partialView").append(orderToAppend);
-                            getNewOrder();
+                            var flag = 0;
+                            var spot = 0;
+                            if ($('td:first-child').length > 0) {
+                                $('td:first-child')
+                                    .each(function (e) {
+                                        if ($(this).text() == messageResponse) {
+                                            flag = 1;
+                                            spot = e;
+                                        }
+                                    });
+                            }
+
+                            if (flag == 1) {
+                                //$(this).parent().remove();
+                                //$('table>tbody > tr > td').slice(spot, spot).parent().remove();
+                                $('td:first-child')
+                                    .each(function (e) {
+                                        if (e === spot) {
+                                            $(this).parent().remove();
+                                            $("#partialView").append(orderToAppend);
+                                            getNewOrder();
+                                        }
+                                    });
+
+                            } else {
+                                $("#partialView").append(orderToAppend);
+                                getNewOrder();
+                            }
+                            //$("#partialView").append(orderToAppend);
+                            //getNewOrder();
                         }
                     });
                 });
