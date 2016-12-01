@@ -1,4 +1,15 @@
 ﻿$(document).ready(function () {
+    $(function () {
+        $('#datetimepicker-from').datepicker({
+            inline: true,
+            sideBySide: true
+        });
+
+        $('#datetimepicker-to').datepicker({
+            inline: true,
+            sideBySide: true
+        });
+    });
 
 });
 getAllOrders();
