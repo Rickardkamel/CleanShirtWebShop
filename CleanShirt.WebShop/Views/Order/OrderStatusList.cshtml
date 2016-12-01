@@ -1,0 +1,47 @@
+﻿@model List<CleanShirt.WebShop.ViewModels.OrderViewModel>
+    
+
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <tr id="row-@item.Id">
+            <td>@item.Id</td>
+            <td>@item.Customer.FirstName @item.Customer.LastName</td>
+            <td>@item.TotalPrice SEK</td>
+            <td>@item.OrderedDate.Date.ToShortDateString()</td>
+            <td>
+                <button onclick="showDetails(@item.Id)" class="btn btn-xs"><i class="glyphicon glyphicon-eye-open"></i></button>
+                <div hidden id="productlist-@item.Id">
+                    @foreach (var product in item.OrderLines)
+                    {
+                        var productQuantity = product.Quantity;
+                        <span>@productQuantity x</span><span> @product.ProductName</span><br />
+                    }
+                </div>
+            </td>
+            <td class="text-center">
+                @if (item.Sent == true)
+                {
+                    <span style="color: green" class="glyphicon glyphicon-ok"></span>
+                }
+                else
+                {
+                    <span style="color: red" class="glyphicon glyphicon-remove"></span>
+                }
+            </td>
+            <td class="text-center">
+                @if (item.Billed == true)
+                {
+                    <span style="color: green" class="glyphicon glyphicon-ok"></span>
+                }
+                else
+                {
+                    <span style="color: red" class="glyphicon glyphicon-remove"></span>
+                }
+            </td>
+        </tr>
+    }
+}
+
