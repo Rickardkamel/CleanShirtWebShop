@@ -6,7 +6,7 @@
 {
     foreach (var item in Model)
     {
-        <tr>
+        <tr id="row-@item.Id">
             <td>@item.Id</td>
             <td>@item.Customer.FirstName @item.Customer.LastName</td>
             <td>@item.TotalPrice SEK</td>

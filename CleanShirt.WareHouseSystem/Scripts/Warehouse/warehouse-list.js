@@ -54,7 +54,7 @@ function getNewOrder() {
                                 //$(this).parent().remove();
                                 //$('table>tbody > tr > td').slice(spot, spot).parent().remove();
                                 $('td:first-child')
-                                    .each(function(e) {
+                                    .each(function (e) {
                                         if (e === spot) {
                                             $(this).parent().remove();
                                             getNewOrder();
@@ -74,7 +74,7 @@ function getNewOrder() {
                             //    }
                             //});
                             //if (flag == 1) {
-                                
+
                             //} else {
                             //    $('#test').append('<tr><td>' + test + '</td><td>' + sample + '</td></tr>');
                             //}
@@ -138,14 +138,37 @@ function deliverOrder(order) {
 
 
         //TODO: DELIVER ORDER
-        console.log("Checked");
+        //console.log("Checked");
+        //$.ajax({
+        //    url: "http://localhost:53365/api/order/" + "NewOrder",
+        //    traditional: true,
+        //    data: JSON.stringify(order),
+        //    contentType: "application/json; charset=utf-8",
+        //    type: "POST",
+        //    success: function (orderToAppend) {
+        //        swal({
+        //            title: "Delivered",
+        //            text: "The package has been registered as sent!",
+        //            type: "success",
+        //            timer: 2000,
+        //            showConfirmButton: false
+        //        });
+        //        $('#checkModal').modal('hide');
+        //        $("#row-" + order.Id).replaceWith(orderToAppend);
+        //    }
+
+        //});
+
+
+        $.post("http://localhost:53365/api/order/" + "NewOrder", order)
+    .done(function (response) {
         $.ajax({
-            url: "http://localhost:53365/api/order/" + "NewOrder",
+            url: 'Home/WarehouseList',
             traditional: true,
-            data: JSON.stringify(order),
+            data: JSON.stringify([response]),
             contentType: "application/json; charset=utf-8",
-            type: "POST",
-            success: function (data) {
+            type: 'POST',
+            success: function (orderToAppend) {
                 swal({
                     title: "Delivered",
                     text: "The package has been registered as sent!",
@@ -154,8 +177,12 @@ function deliverOrder(order) {
                     showConfirmButton: false
                 });
                 $('#checkModal').modal('hide');
+                $("#row-" + order.Id).replaceWith(orderToAppend);
             }
         });
+    });
+
+
     }
     else {
         //TODO: GIVE ERRORMESSAGE
@@ -177,13 +204,33 @@ function undoSent(order) {
     order.BilledDate = parseDate(order.BilledDate);
 
     //TODO: DELIVER ORDER
+    //$.ajax({
+    //    url: "http://localhost:53365/api/order/" + "NewOrder",
+    //    traditional: true,
+    //    data: JSON.stringify(order),
+    //    contentType: "application/json; charset=utf-8",
+    //    type: "POST",
+    //    success: function (data) {
+    //        swal({
+    //            title: "Returned",
+    //            text: "The package has been returned",
+    //            type: "success",
+    //            timer: 2500,
+    //            showConfirmButton: false
+    //        });
+    //    }
+    //});
+
+
+    $.post("http://localhost:53365/api/order/" + "NewOrder", order)
+.done(function (response) {
     $.ajax({
-        url: "http://localhost:53365/api/order/" + "NewOrder",
+        url: 'Home/WarehouseList',
         traditional: true,
-        data: JSON.stringify(order),
+        data: JSON.stringify([response]),
         contentType: "application/json; charset=utf-8",
-        type: "POST",
-        success: function (data) {
+        type: 'POST',
+        success: function (orderToAppend) {
             swal({
                 title: "Returned",
                 text: "The package has been returned",
@@ -191,8 +238,10 @@ function undoSent(order) {
                 timer: 2500,
                 showConfirmButton: false
             });
+            $("#row-" + order.Id).replaceWith(orderToAppend);
         }
     });
+});
 }
 
 //function test() {
