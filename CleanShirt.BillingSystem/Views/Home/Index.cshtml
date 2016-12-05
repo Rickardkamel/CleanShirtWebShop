@@ -16,7 +16,9 @@
                         <div class="col-md-9">
                             <h4 class="text-center">From</h4>
                             
-                            <div id="datetimepicker-from"></div>
+                            <div id="datetimepicker-from">
+                                <input id="from-date" data-format="yyyy-MM-dd hh:mm:ss" type="text" hidden />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -28,13 +30,15 @@
                         <div class="col-md-9">
                             <h4 class="text-center">To</h4>
                             
-                            <div id="datetimepicker-to"></div>
+                            <div id="datetimepicker-to">
+                                <input id="to-date" data-format="yyyy-MM-dd hh:mm:ss" type="text" hidden/>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <br />
-            <button class="btn btn-success col-md-offset-5 col-md-3" onclick="console.log($('#from-date').val())">Get Report</button>
+            <button class="btn btn-success col-md-offset-5 col-md-3" onclick="testFunc()">Get Report</button>
         </div>
     </div>
 </div>
@@ -43,21 +47,24 @@
         <div class="row col-md-10 col-md-offset-1 custyle">
             <table id="billing-table" class="table table-striped custab">
                 <thead>
-                    @*<a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a>*@
-                    <tr>
-                        <th>ID</th>
-                        <th>Customer Name</th>
-                        <th>Total Price</th>
-                        <th>Ordered Date</th>
-                        <th>Products</th>
-                        <th class="text-center">Delivered</th>
-                        <th class="text-center">Billed</th>
-                        <th>Action</th>
-                        @* class="text-center" *@
-                    </tr>
+                @*<a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a>*@
+                <tr>
+                    <th>ID</th>
+                    <th>Customer Name</th>
+                    <th>Total Price</th>
+                    <th>Ordered Date</th>
+                    <th>Products</th>
+                    <th class="text-center">Delivered</th>
+                    <th class="text-center">Billed</th>
+                    <th>Action</th>
+                    @* class="text-center" *@
+                </tr>
                 </thead>
                 <tbody id="partialView"></tbody>
             </table>
         </div>
     </div>
 </div>
+
+
+<div id="reportListView"></div>

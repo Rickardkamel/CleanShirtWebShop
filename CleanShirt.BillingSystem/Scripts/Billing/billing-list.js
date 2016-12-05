@@ -16,6 +16,30 @@ getAllOrders();
 getNewOrder();
 
 
+function testFunc() {
+
+    var reportDates = {
+        fromDate: new Date($("#from-date").val()).toUTCString(),
+        toDate: new Date($("#to-date").val()).toUTCString()
+    }
+    $.post("http://localhost:53365/api/order/getOrderReport", reportDates)
+        .done(function (reportList) {
+            $.ajax({
+                url: 'Home/ReportList',
+                traditional: true,
+                data: JSON.stringify(reportList),
+                contentType: "application/json; charset=utf-8",
+                type: 'POST',
+                success: function (data) {
+                    $("#reportListView").html(data);
+
+                    $('#reportModal').modal('show');
+                }
+            });
+        });
+}
+
+
 function getAllOrders() {
     $.get("http://localhost:53365/api/order/",
        function (data, status) {

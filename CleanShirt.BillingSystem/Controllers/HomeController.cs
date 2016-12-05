@@ -18,5 +18,10 @@ namespace CleanShirt.BillingSystem.Controllers
         {
             return PartialView(orders);
         }
+
+        public ActionResult ReportList(List<ReportViewModel> reports)
+        {
+            return PartialView(reports);
+        }
     }
 }
