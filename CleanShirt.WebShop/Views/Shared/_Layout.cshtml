@@ -37,13 +37,16 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <div style="color: white; margin-right: -200px;">
-                            <label id="item-number">0</label>
-                            <label> Items / </label>
+                    <li style="position: absolute;">
+                        <div style="color: white; padding-left: 50px;">
+                            <label id="total-price">
+                            </label>
+                            @if (Session["totalCartPrice"] != null)
+                            {
+                                Html.LabelFor(m => (int)Session["totalCartPrice"]);
+                            }
 
-                            <label id="total-price">0</label>
-                            <label> SEK | </label>
+                            <label> SEK </label>
                         </div>
                     </li>
                     <li>

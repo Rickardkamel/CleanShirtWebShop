@@ -11,6 +11,7 @@
             <td>@item.Customer.FirstName @item.Customer.LastName</td>
             <td>@item.TotalPrice SEK</td>
             <td>@item.OrderedDate.Date.ToShortDateString()</td>
+            <td>@item.SentDate.Value.Date.ToLocalTime().ToShortDateString()</td>
             <td>
                 <button onclick="showDetails(@item.Id)" class="btn btn-xs"><i class="glyphicon glyphicon-eye-open"></i></button>
                 <div hidden id="productlist-@item.Id">
@@ -21,7 +22,7 @@
                     }
                 </div>
             </td>
-            <td class="text-center">
+            @*<td class="text-center">
                 @if (item.Sent == true)
                 {
                     <span style="color: green" class="glyphicon glyphicon-ok"></span>
@@ -40,7 +41,7 @@
                 {
                     <span style="color: red" class="glyphicon glyphicon-remove"></span>
                 }
-            </td>
+            </td>*@
         </tr>
     }
 }

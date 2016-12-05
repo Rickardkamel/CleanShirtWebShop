@@ -39,8 +39,8 @@ function getTotalItems() {
 }
 
 function updateCartTotal(price) {
-    $("#total-price").html(getTotalCost(price));
+    //$("#total-price").html(getTotalCost(price));
 
-    $("#item-number").html(getTotalItems());
+    //$("#item-number").html(getTotalItems());
 }
 

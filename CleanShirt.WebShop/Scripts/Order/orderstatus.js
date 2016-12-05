@@ -4,12 +4,12 @@ getAllOrders();
 
 
 function getAllOrders() {
-    $.get("http://localhost:53365/api/order",
-       function (data, status) {
+    $.get("http://localhost:53365/api/order/GetCompletedOrders",
+       function (response, status) {
            $.ajax({
                url: 'Order/OrderStatusList',
                traditional: true,
-               data: JSON.stringify(data),
+               data: JSON.stringify(response),
                contentType: "application/json; charset=utf-8",
                type: 'POST',
                success: function (data) {

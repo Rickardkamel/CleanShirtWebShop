@@ -12,11 +12,6 @@ namespace CleanShirt.WebShop.Controllers
 {
     public class HomeController : Controller
     {
-        //public readonly ProductController _productController;
-        //public HomeController()
-        //{
-        //    _productController = new ProductController();
-        //}
         public ActionResult Index()
         {
             return View();
@@ -29,6 +24,7 @@ namespace CleanShirt.WebShop.Controllers
 
         public ActionResult AddToCart(ProductViewModel product)
         {
+
             var convertedProduct = new ShoppingCartItemViewModel
             {
                 Product = product,
@@ -43,6 +39,11 @@ namespace CleanShirt.WebShop.Controllers
                 };
                 newShoppingCart.ShoppingCartItems.Add(convertedProduct);
 
+                foreach (var item in newShoppingCart.ShoppingCartItems)
+                {
+                    Session["totalCartPrice"] = item.Quantity * item.Product.Price;
+                }
+                Session["totalCartPrice"] =
 
                 Session["shoppingCart"] = newShoppingCart;
             }
@@ -55,10 +56,11 @@ namespace CleanShirt.WebShop.Controllers
                     if (item.Product.Name == convertedProduct.Product.Name)
                     {
                         item.Quantity++;
-
                         Session["shoppingCart"] = shoppingList;
                         return View("Index");
                     }
+
+                    Session["totalCartPrice"] = item.Quantity * item.Product.Price;
                 }
 
                 shoppingList.ShoppingCartItems.Add(convertedProduct);
@@ -69,6 +71,6 @@ namespace CleanShirt.WebShop.Controllers
             return View("Index");
         }
 
-        
+
     }
 }
