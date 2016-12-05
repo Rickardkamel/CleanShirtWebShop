@@ -29,6 +29,32 @@ namespace CleanShirt.WebApi.Handlers
             return _uow.OrderRepository.GetAll().Where(x => x.Billed).ToList().ToContracts();
         }
 
+        public IEnumerable<OrderContract> GetCompletedOrders()
+        {
+            return _uow.OrderRepository.GetAll().Where(x => x.Sent).ToList().ToContracts();
+        }
+
+        public IEnumerable<ReportContract> GetOrderReport(ReportDatesContact reportContract)
+        {
+            var reportSummary = _uow.OrderRepository.GetAll()
+                .Where(x => x.BilledDate >= reportContract.FromDate && x.BilledDate <= reportContract.ToDate)
+                .SelectMany(c => c.OrderLines)
+                .GroupBy(p => p.ProductName)
+                .Select(a => new ReportContract
+                {
+                    Price = a.Sum(b => b.PricePerProduct * b.Quantity),
+                    Quantity = a.Sum(q => q.Quantity),
+                    ProductName = a.Key
+                }).ToList();
+
+            return reportSummary;
+
+            //return _uow.OrderRepository.GetAll()
+            //.Where(x => x.BilledDate >= reportContract.FromDate && x.BilledDate <= reportContract.ToDate)
+            //.ToList()
+            //.ToContracts();
+        }
+
         public OrderContract Get(int id)
         {
             return _uow.OrderRepository.Get(id).ToContract();
@@ -39,6 +65,15 @@ namespace CleanShirt.WebApi.Handlers
             OrderContract order;
             if (orderContract.Id != 0)
             {
+                if (orderContract.Billed == false)
+                {
+                    orderContract.BilledDate = null;
+                }
+                if (orderContract.Sent == false)
+                {
+                    orderContract.SentDate = null;
+                }
+
                 order = _uow.OrderRepository.CreateOrUpdate(orderContract.ToEntity()).ToContract();
                 SendInput(order.Id.ToString(), queueType);
                 return order;
@@ -68,7 +103,7 @@ namespace CleanShirt.WebApi.Handlers
             return order;
         }
 
-        
+
 
         public bool SendInput(string message, string queueType)
         {
@@ -95,7 +130,5 @@ namespace CleanShirt.WebApi.Handlers
         {
             _uow.OrderRepository.Delete(id);
         }
-
-
     }
 }

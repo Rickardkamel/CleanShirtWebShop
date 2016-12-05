@@ -30,6 +30,20 @@ namespace CleanShirt.WebApi.Controllers
             return _orderHandler.GetWareHouseOrders();
         }
 
+        [HttpGet]
+        [Route("api/order/GetCompletedOrders")]
+        public IEnumerable<OrderContract> GetCompletedOrders()
+        {
+            return _orderHandler.GetCompletedOrders();
+        }
+
+        [HttpPost]
+        [Route("api/order/GetOrderReport")]
+        public IEnumerable<ReportContract> GetOrderReport(ReportDatesContact reportContract)
+        {
+            return _orderHandler.GetOrderReport(reportContract);
+        }
+
         [Route("api/order/{id}")]
         [HttpGet]
         public OrderContract Get([FromUri] int id)
