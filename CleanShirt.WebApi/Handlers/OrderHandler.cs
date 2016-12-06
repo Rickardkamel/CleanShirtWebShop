@@ -48,11 +48,6 @@ namespace CleanShirt.WebApi.Handlers
                 }).ToList();
 
             return reportSummary;
-
-            //return _uow.OrderRepository.GetAll()
-            //.Where(x => x.BilledDate >= reportContract.FromDate && x.BilledDate <= reportContract.ToDate)
-            //.ToList()
-            //.ToContracts();
         }
 
         public OrderContract Get(int id)
