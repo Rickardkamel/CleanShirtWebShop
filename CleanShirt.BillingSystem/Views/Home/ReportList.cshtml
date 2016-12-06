@@ -1,26 +1,13 @@
 ﻿@model List<CleanShirt.BillingSystem.ViewModels.ReportViewModel>
 
 
-@*@if (Model != null)
-    {
-        foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.ProductName</td>
-                <td>@item.Quantity</td>
-                <td>@item.Price SEK</td>
-            </tr>
-        }
-    }*@
-
-
 <div class="modal fade" id="reportModal" data-backdrop="static"
      data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="myModalLabel">Report</h4>
             </div>
             <div class="modal-body">
                 <table class="table">
