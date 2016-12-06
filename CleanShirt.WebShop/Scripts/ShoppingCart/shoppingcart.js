@@ -9,14 +9,51 @@
             function () {
                 prev = parseInt($(this).val());
             });
+
+    $.get("http://localhost:53365/api/product/",
+        function (data) {
+            $.each(data, function(e) {
+                validateQuantity(data[e]);
+            });
+        });
+    checkCart();
 });
+
+function validateQuantity(value) {
+    $(".item-grp")
+        .each(function (e) {
+            var productId = $(this).find(":first-child").attr("id");
+
+            if (value.Id == productId) {
+                var quantityValue = $(this).find("input");
+
+                if (quantityValue.val() > value.QuantityInStorage) {
+                    $(this).find("input").val(value.QuantityInStorage);
+                    updateItemQuantity(productId);
+                }
+            }
+        });
+}
+
+function checkCart() {
+    var count = $("#cart").children(":visible").length;
+    if (count === 0) {
+        $("#contact-info").remove();
+    }
+}
+
+function updateCartSummary() {
+    $.post("Home/CartSummary",
+                   function (data) {
+                       $("#cartSummaryPartialView").html(data);
+                   });
+}
 
 function registerCart() {
     var customerData = getFormObj("contact-form");
 
     $.post("ShoppingCart/RegisterCart", customerData, function (response) {
         $.post("http://localhost:53365/api/order/" + "NewOrder", response).done(function (data) {
-            //window.location.href = '/Home/Index/';
             swal({
                 title: "Purchase complete!",
                 text: "Thank you for your purchase!",
@@ -31,18 +68,6 @@ function registerCart() {
         });
     });
 }
-
-//function parseDate(date) {
-//    var dateInString = '{ "billedDate": ' + '"' + date + '"' + '}';
-//    var parsed = JSON.parse(dateInString, function (key, value) {
-//        if (typeof value === 'string') {
-//            var d = /\/Date\((\d*)\)\//.exec(value);
-//            return (d) ? new Date(+d[1]) : value;
-//        }
-//        return value;
-//    });
-//    return parsed;
-//}
 
 function getFormObj(formId) {
     var formObj = {};
@@ -84,7 +109,7 @@ function updateItemQuantity(itemId, optionalValue) {
        $.post('ShoppingCart/UpdateItemInCart', dataToSend, function (response) {
            $("#cart-price").html(countCartPrice(response)).stop().css("opacity", "0").animate({
                opacity: 1
-           }, 1000);
+           });
        }, "json");
    });
 }
@@ -92,20 +117,24 @@ function updateItemQuantity(itemId, optionalValue) {
 function removeItem(itemId) {
     $.post("/ShoppingCart/RemoveFromCart", { "id": itemId },
             function (response) {
-                $("#item-" + itemId).fadeOut(1000);
-                $("#cart-price").html(countCartPrice(response)).stop().css("opacity", "0").animate({
-                    opacity: 1
-                }, 1000);
+                $("#item-" + itemId).fadeOut(function() {
+                    $("#cart-price").html(countCartPrice(response)).stop().css("opacity", "0").animate({
+                        opacity: 1
+                    });
+                });
+                
             });
 }
 
 function countCartPrice(data) {
 
     var totalPrice = 0;
-
     data.ShoppingCartItems.forEach(function (i) {
         totalPrice += (i.Quantity * i.Product.Price);
     });
+
+    checkCart();
+    updateCartSummary();
 
     return totalPrice;
 }

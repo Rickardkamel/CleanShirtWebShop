@@ -17,9 +17,45 @@ namespace CleanShirt.WebShop.Controllers
             return View();
         }
 
+        public ActionResult Error()
+        {
+            Server.ClearError();
+            return View();
+        }
+
         public ActionResult Products(List<ProductViewModel> products)
         {
             return PartialView(products);
+        }
+
+        public ActionResult CartSummary()
+        {
+            if (Session["shoppingCart"] == null)
+            {
+                var emptyCartToDisplay = new CartSummaryViewModel
+                {
+                    TotalPrice = 0,
+                    TotalProducts = 0
+                };
+
+                return PartialView(emptyCartToDisplay);
+            }
+            var cart = (ShoppingCartViewModel)Session["shoppingCart"];
+            var totalProducts = 0;
+            var totalPrice = 0;
+            foreach (var item in cart.ShoppingCartItems)
+            {
+                totalProducts += item.Quantity;
+                totalPrice += item.Quantity * item.Product.Price;
+            }
+
+            var summaryToDisplay = new CartSummaryViewModel
+            {
+                TotalPrice = totalPrice,
+                TotalProducts = totalProducts
+            };
+
+            return PartialView(summaryToDisplay);
         }
 
         public ActionResult AddToCart(ProductViewModel product)
@@ -61,6 +97,8 @@ namespace CleanShirt.WebShop.Controllers
                     }
 
                     Session["totalCartPrice"] = item.Quantity * item.Product.Price;
+
+                    ViewBag.Test = (int)Session["totalCartPrice"];
                 }
 
                 shoppingList.ShoppingCartItems.Add(convertedProduct);

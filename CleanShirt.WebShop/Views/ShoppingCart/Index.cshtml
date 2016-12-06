@@ -22,8 +22,8 @@
                     <div id="cart" class="panel-body">
                         @foreach (var item in Model.ShoppingCartItems)
                         {
-                            <div id="item-@item.Product.Id">
-                                <div  class="row">
+                            <div id="item-@item.Product.Id" class="item-grp">
+                                <div id="@item.Product.Id"  class="row">
                                     <div class="col-xs-2">
                                         <img class="img-responsive" style="width: 100px; height: 70px" src="@Url.Content("~/Images/shirts/" + @item.Product.ImageUrl)" />
                                     </div>
@@ -39,7 +39,6 @@
                                         </div>
                                         <div class="col-xs-4">
                                             @Html.TextBoxFor(m => item.Quantity, new { id = "quantity" + @item.Product.Id, data_id=@item.Product.Id, type="number",  @class = "form-control quantity input-sm", @value = @item.Quantity, @onchange = "updateItemQuantity("+ @item.Product.Id +");" })
-                                            @*<input id="item-quantity + @item.Product.Id" type="text" class="form-control input-sm" value="@item.Quantity">*@
                                         </div>
                                         <div class="col-xs-1">
                                             <button id="item-refresh" onclick="updateItemQuantity(@item.Product.Id)" type="button" class="btn btn-link btn-xs">
@@ -57,72 +56,77 @@
                             </div>
                         }
                     </div>
-                    <div class="panel-footer">
-                        <div class="row text-center">
-                            <div class="col-xs-12">
-                                <h4 class="text-right">
-                                    Total <strong id="cart-price">
-                                        @{
-                                            var totalPrice = Model.ShoppingCartItems.Sum(item => item.Product.Price * item.Quantity);
-                                            @totalPrice
-                                        }
-                                    </strong>
-                                    SEK
-                                </h4>
-                            </div>
-                            <form class="form-horizontal" id="contact-form">
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label" for="appendedtext"></label>
-                                    <div class="col-md-4">
-                                        <div class="input-group">
-                                            <input id="firstname" name="firstname" class="form-control" placeholder="" type="text" required="">
-                                            <span class="input-group-addon">First name</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label" for=""></label>
-                                    <div class="col-md-4">
-                                        <div class="input-group">
-                                            <input id="lastname" name="lastname" class="form-control" placeholder="" type="text" required="">
-                                            <span class="input-group-addon">Last name</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label" for=""></label>
-                                    <div class="col-md-4">
-                                        <div class="input-group">
-                                            <input id="adress" name="adress" class="form-control" placeholder="" type="text" required="">
-                                            <span class="input-group-addon">Adress</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label" for=""></label>
-                                    <div class="col-md-4">
-                                        <div class="input-group">
-                                            <input id="zipcode" name="zipcode" class="form-control" placeholder="" type="text" required="">
-                                            <span class="input-group-addon">ZipCode  </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label" for=""></label>
-                                    <div class="col-md-4">
-                                        <div class="input-group">
-                                            <input id="city" name="city" class="form-control" placeholder="" type="text" required="">
-                                            <span class="input-group-addon">City</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-3 pull-right">
-                                    <input type="submit" value="Checkout" class="btn btn-success btn-block" />
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                    if (Model.ShoppingCartItems.Count > 0)
+                    {
+                        
+                        <div class="panel-footer" id="contact-info">
+                            <div class="row text-center">
+                                <div class="col-xs-12">
+                                    <h4 class="text-right">
+                                        Total <strong id="cart-price">
+                                            @{
+                                                var totalPrice = Model.ShoppingCartItems.Sum(item => item.Product.Price * item.Quantity);
+                                                @totalPrice
                                             }
+                                        </strong>
+                                        SEK
+                                    </h4>
+                                </div>
+                                <form class="form-horizontal" id="contact-form">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="appendedtext"></label>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <input id="firstname" name="firstname" class="form-control" placeholder="" type="text" required="">
+                                                <span class="input-group-addon">First name</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for=""></label>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <input id="lastname" name="lastname" class="form-control" placeholder="" type="text" required="">
+                                                <span class="input-group-addon">Last name</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for=""></label>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <input id="adress" name="adress" class="form-control" placeholder="" type="text" required="">
+                                                <span class="input-group-addon">Adress</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for=""></label>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <input id="zipcode" name="zipcode" class="form-control" placeholder="" type="text" required="">
+                                                <span class="input-group-addon">ZipCode  </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for=""></label>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <input id="city" name="city" class="form-control" placeholder="" type="text" required="">
+                                                <span class="input-group-addon">City</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3 pull-right">
+                                        <input type="submit" value="Checkout" class="btn btn-success btn-block" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                                                    }
+
+                                                }
             </div>
         </div>
     </div>

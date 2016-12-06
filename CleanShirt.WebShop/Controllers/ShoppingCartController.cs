@@ -10,12 +10,24 @@ namespace CleanShirt.WebShop.Controllers
 {
     public class ShoppingCartController : Controller
     {
-        // GET: ShoppingCart
         public ActionResult Index()
         {
             var shoppingCart = (ShoppingCartViewModel)Session["shoppingCart"];
 
             return View(shoppingCart);
+        }
+
+        public int CheckCart()
+        {
+            var shoppingCart = (ShoppingCartViewModel)Session["shoppingCart"];
+            var shoppingCartValidation = 1;
+
+            if (shoppingCart == null)
+            {
+                shoppingCartValidation = 0;
+            }
+
+            return shoppingCartValidation;
         }
 
         public JsonResult UpdateItemInCart(ShoppingCartItemViewModel shoppingCartItem)
@@ -75,7 +87,5 @@ namespace CleanShirt.WebShop.Controllers
 
             return Json(order);
         }
-
-        // TODO: CHECKOUT
     }
 }

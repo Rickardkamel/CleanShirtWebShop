@@ -1,0 +1,14 @@
+﻿@model CleanShirt.WebShop.ViewModels.CartSummaryViewModel
+
+<li>
+    <div style="color: white; margin-right: -200px;">
+        @if (Model != null)
+        {
+            <label id="item-number">@Model.TotalProducts</label>
+            <label> Items / </label>
+            <label id="total-price">@Model.TotalPrice</label>
+            <label> SEK </label>
+        }
+
+    </div>
+</li>

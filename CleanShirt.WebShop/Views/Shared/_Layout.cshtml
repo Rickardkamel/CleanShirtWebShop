@@ -19,7 +19,6 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @*@Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -38,16 +37,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li style="position: absolute;">
-                        <div style="color: white; padding-left: 50px;">
-                            <label id="total-price">
-                            </label>
-                            @if (Session["totalCartPrice"] != null)
-                            {
-                                Html.LabelFor(m => (int)Session["totalCartPrice"]);
-                            }
-
-                            <label> SEK </label>
-                        </div>
+                        <div id="cartSummaryPartialView"></div>
                     </li>
                     <li>
 
