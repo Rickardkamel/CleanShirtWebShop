@@ -40,11 +40,11 @@
             <td>
                 @if (item.Billed == false)
                 {
-                    <button class="btn btn-success btn-xs" onclick="invoiceOrder(@Json.Encode(item))"><span class="glyphicon glyphicon-ok"></span></button>
+                    <button id="invoice-button-@item.Id" class="btn btn-success btn-xs" onclick="invoiceOrder(@Json.Encode(item))"><span class="glyphicon glyphicon-ok"></span></button>
                 }
                 else
                 {
-                    <button class="btn btn-danger btn-xs" onclick="unInvoiceOrder(@Json.Encode(item))"><span class="glyphicon glyphicon-remove"></span></button>
+                    <button id="uninvoice-button-@item.Id" class="btn btn-danger btn-xs" onclick="unInvoiceOrder(@Json.Encode(item))"><span class="glyphicon glyphicon-remove"></span></button>
                 }
             </td>
         </tr>

@@ -12,17 +12,25 @@
     });
 
 });
-getAllOrders();
-getNewOrder();
 
 
-function testFunc() {
+clearMessages();
+
+function clearMessages() {
+    $.get("http://cleanshirtwebapi.azurewebsites.net/api/order/ClearMessages/" + "InvoiceOrder",
+        function () {
+            getAllOrders();
+        });
+}
+
+
+function getReport() {
 
     var reportDates = {
         fromDate: new Date($("#from-date").val()).toUTCString(),
         toDate: new Date($("#to-date").val()).toUTCString()
     }
-    $.post("http://localhost:53365/api/order/getOrderReport", reportDates)
+    $.post("http://cleanshirtwebapi.azurewebsites.net/api/order/getOrderReport", reportDates)
         .done(function (reportList) {
             $.ajax({
                 url: 'Home/ReportList',
@@ -41,7 +49,7 @@ function testFunc() {
 
 
 function getAllOrders() {
-    $.get("http://localhost:53365/api/order/",
+    $.get("http://cleanshirtwebapi.azurewebsites.net/api/order/",
        function (data, status) {
            $.ajax({
                url: 'Home/BillingList',
@@ -57,12 +65,12 @@ function getAllOrders() {
 }
 
 function getNewOrder() {
-    $.get("http://localhost:53365/api/order/GetNewOrders/" + "NewOrder",
+    $.get("http://cleanshirtwebapi.azurewebsites.net/api/order/GetNewOrders/" + "NewOrder",
         function (messageResponse) {
             if (messageResponse === "") {
                 getNewOrder();
             } else {
-                $.get("http://localhost:53365/api/order/" + messageResponse,
+                $.get("http://cleanshirtwebapi.azurewebsites.net/api/order/" + messageResponse,
                 function (order) {
                     $.ajax({
                         url: 'Home/BillingList',
@@ -84,8 +92,6 @@ function getNewOrder() {
                             }
 
                             if (flag == 1) {
-                                //$(this).parent().remove();
-                                //$('table>tbody > tr > td').slice(spot, spot).parent().remove();
                                 $('td:first-child')
                                     .each(function (e) {
                                         if (e === spot) {
@@ -99,8 +105,6 @@ function getNewOrder() {
                                 $("#partialView").append(orderToAppend);
                                 getNewOrder();
                             }
-                            //$("#partialView").append(orderToAppend);
-                            //getNewOrder();
                         }
                     });
                 });
@@ -113,10 +117,13 @@ function showDetails(itemId) {
 };
 
 function invoiceOrder(order) {
+    $("#invoice-button-" + order.Id).prop('disabled', true);
+    $("#uninvoice-button-" + order.Id).prop('disabled', true);
+
     order.BilledDate = new Date().toUTCString();
     order.OrderedDate = parseDate(order.OrderedDate);
     order.Billed = true;
-    $.post("http://localhost:53365/api/order/" + "InvoiceOrder", order)
+    $.post("http://cleanshirtwebapi.azurewebsites.net/api/order/" + "InvoiceOrder", order)
     .done(function (response) {
         $.ajax({
             url: 'Home/BillingList',
@@ -125,13 +132,18 @@ function invoiceOrder(order) {
             contentType: "application/json; charset=utf-8",
             type: 'POST',
             success: function (orderToAppend) {
-                $("#row-"+order.Id).replaceWith(orderToAppend);
+                $("#row-" + order.Id).replaceWith(orderToAppend);
+                $("#invoice-button-" + order.Id).prop('disabled', false);
+                $("#uninvoice-button-" + order.Id).prop('disabled', false);
             }
         });
     });
 };
 
 function unInvoiceOrder(order) {
+    $("#invoice-button-" + order.Id).prop('disabled', true);
+    $("#uninvoice-button-" + order.Id).prop('disabled', true);
+
     if (order.Sent === true) {
         swal({
             title: "BillingError",
@@ -145,7 +157,7 @@ function unInvoiceOrder(order) {
     order.BilledDate = new Date().toUTCString();
     order.OrderedDate = parseDate(order.OrderedDate);
     order.Billed = false;
-    $.post("http://localhost:53365/api/order/" + "InvoiceOrder", order)
+    $.post("http://cleanshirtwebapi.azurewebsites.net/api/order/" + "InvoiceOrder", order)
     .done(function (response) {
         $.ajax({
             url: 'Home/BillingList',
@@ -155,6 +167,8 @@ function unInvoiceOrder(order) {
             type: 'POST',
             success: function (orderToAppend) {
                 $("#row-" + order.Id).replaceWith(orderToAppend);
+                $("#invoice-button-" + order.Id).prop('disabled', false);
+                $("#uninvoice-button-" + order.Id).prop('disabled', false);
             }
         });
     });
