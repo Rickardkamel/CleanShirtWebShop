@@ -12,7 +12,7 @@ namespace CleanShirt.WebShop.Controllers
         // GET: Order
         public ActionResult Index()
         {
-            return View();
+            return View("Index");
         }
 
         public ActionResult OrderStatusList(List<OrderViewModel> orders)

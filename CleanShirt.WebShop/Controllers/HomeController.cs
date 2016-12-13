@@ -108,7 +108,5 @@ namespace CleanShirt.WebShop.Controllers
 
             return View("Index");
         }
-
-
     }
 }

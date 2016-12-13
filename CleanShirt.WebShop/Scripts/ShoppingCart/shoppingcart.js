@@ -10,7 +10,7 @@
                 prev = parseInt($(this).val());
             });
 
-    $.get("http://localhost:53365/api/product/",
+    $.get("http://cleanshirtwebapi.azurewebsites.net/api/product/",
         function (data) {
             $.each(data, function(e) {
                 validateQuantity(data[e]);
@@ -43,7 +43,7 @@ function checkCart() {
 }
 
 function updateCartSummary() {
-    $.post("Home/CartSummary",
+    $.post("/Home/CartSummary",
                    function (data) {
                        $("#cartSummaryPartialView").html(data);
                    });
@@ -52,8 +52,8 @@ function updateCartSummary() {
 function registerCart() {
     var customerData = getFormObj("contact-form");
 
-    $.post("ShoppingCart/RegisterCart", customerData, function (response) {
-        $.post("http://localhost:53365/api/order/" + "NewOrder", response).done(function (data) {
+    $.post("/ShoppingCart/RegisterCart", customerData, function (response) {
+        $.post("http://cleanshirtwebapi.azurewebsites.net/api/order/" + "NewOrder", response).done(function (data) {
             swal({
                 title: "Purchase complete!",
                 text: "Thank you for your purchase!",
@@ -89,7 +89,7 @@ function updateItemQuantity(itemId, optionalValue) {
         removeItem(itemId);
         return;
     }
-    $.get("http://localhost:53365/api/product/" + itemId,
+    $.get("http://cleanshirtwebapi.azurewebsites.net/api/product/" + itemId,
    function (data, status) {
        if (quantityToUpdate > data.QuantityInStorage) {
            swal({
@@ -106,7 +106,7 @@ function updateItemQuantity(itemId, optionalValue) {
            "Product": data,
            "Quantity": quantityToUpdate
        };
-       $.post('ShoppingCart/UpdateItemInCart', dataToSend, function (response) {
+       $.post('/ShoppingCart/UpdateItemInCart', dataToSend, function (response) {
            $("#cart-price").html(countCartPrice(response)).stop().css("opacity", "0").animate({
                opacity: 1
            });

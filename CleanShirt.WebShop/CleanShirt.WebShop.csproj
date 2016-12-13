@@ -152,6 +152,7 @@
     <Content Include="Images\Shirts\5.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\CleanshirtWebShop - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -182,9 +183,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\ShoppingCart\Index.cshtml" />
     <Content Include="Views\Home\Products.cshtml" />
-    <None Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Order\OrderStatusList.cshtml" />
     <Content Include="Views\Shared\CartSummary.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
