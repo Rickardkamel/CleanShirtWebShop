@@ -71,7 +71,7 @@ namespace CleanShirt.WebApi.Controllers
             var idToSend = "";
             var client = QueueClient.CreateFromConnectionString(connectionString, queueName);
 
-            var brokeredMessage = client.Receive(TimeSpan.FromSeconds(30));
+            var brokeredMessage = client.Receive(TimeSpan.FromSeconds(10));
 
             if (brokeredMessage != null)
             {
@@ -80,6 +80,26 @@ namespace CleanShirt.WebApi.Controllers
             }
 
             return Ok(idToSend);
+        }
+
+        [HttpGet]
+        [Route("api/order/ClearMessages/{queueType}")]
+        public IHttpActionResult ClearMessages(string queueType)
+        {
+            var connectionString = "Endpoint=sb://cleanshirtws.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=t205ZpBJEI6Z09afJgxm10Ed5qFbGA2QC6tDq65iLP0=";
+            var queueName = queueType;
+
+            var client = QueueClient.CreateFromConnectionString(connectionString, queueName);
+            
+            var brokeredMessage = client.Receive(TimeSpan.Zero);
+
+            while (brokeredMessage != null)
+            {
+                brokeredMessage.Complete();
+                brokeredMessage = client.Receive(TimeSpan.Zero);
+            }
+
+            return Ok();
         }
 
         // TODO: CHECK IF WE NEED DELETE
